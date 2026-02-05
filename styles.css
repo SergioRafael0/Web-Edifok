@@ -42,6 +42,8 @@
 
 /* Reset mínimo (archivos externos no usados para evitar 404) */
 * { box-sizing: border-box; }
+html { overflow-x: hidden; scroll-behavior: smooth; }
+body { overflow-x: hidden; }
 ul { list-style: none; margin: 0; padding: 0; }
 .clearfix::after { content: ''; display: table; clear: both; }
 
@@ -79,11 +81,14 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 
 body {
-    font-family: 'Poppins', sans-serif; 
+    font-family: 'Poppins', sans-serif;
     font-weight: 400;
     line-height: 1.4;
     color: var(--color-content);
     font-size: 16px;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-dark);
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -95,17 +100,17 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 h1 {
-    font-size: 75px;
+    font-size: clamp(1.75rem, 4vw + 1rem, 3.5rem);
     color: var(--color-white);
-    line-height: 1.4;
+    line-height: 1.35;
 }
 
 h2 {
-    font-size: 50px;
+    font-size: clamp(1.75rem, 3vw + 1rem, 2.8rem);
 }
 
 h3 {
-    font-size: 25px;
+    font-size: clamp(1.1rem, 1.5vw + 0.5rem, 1.5rem);
 }
 
 .align-center {
@@ -113,8 +118,8 @@ h3 {
 }
 
 .ptb {
-    padding-top: 100px;
-    padding-bottom: 100px;
+    padding-top: clamp(60px, 10vw, 100px);
+    padding-bottom: clamp(60px, 10vw, 100px);
 }
 
 .flex {
@@ -133,15 +138,22 @@ h3 {
 }
 
 .wrapper {
-    max-width: 1920px;
+    max-width: 100%;
     width: 100%;
-    margin:  0 auto;
+    margin: 0 auto;
+    background-color: var(--bg-dark);
+}
+
+main {
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
 }
 
 .container {
     max-width: 1200px;
     width: 100%;
-    padding: 0 15px;
+    padding: 0 20px;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     margin: 0 auto;
@@ -270,8 +282,10 @@ a {
     left: 0;
     right: 0;
     z-index: 1000;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .wrapper-header {
@@ -311,12 +325,20 @@ a {
 
 .wrapper-header-img {
     min-height: 100vh;
-    height: 750px;
+    min-height: 100dvh;
+    height: auto;
+    min-height: 600px;
+    margin: 0;
+    padding: 120px 20px 80px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
     background-image: linear-gradient(rgba(17, 17, 17, 0.65), rgba(17, 17, 17, 0.65)), url("img/condohorz.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    background-attachment: fixed;
+    background-attachment: scroll;
+    background-color: var(--bg-dark);
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
@@ -1104,16 +1126,20 @@ button[type="submit"]:hover {
     margin: 0;
 }
 
-/* Planes - Encabezado azul y descripción */
+/* Planes - Encabezado azul y descripción (3 en fila, luego apilados) */
 .plans-edifok {
+    display: flex;
+    flex-wrap: wrap;
     align-items: stretch;
+    justify-content: center;
     gap: 24px;
 }
 .plan-card {
     display: flex;
     flex-direction: column;
-    width: 33.333%;
-    min-width: 280px;
+    width: auto;
+    flex: 1 1 260px;
+    max-width: calc((100% - 48px) / 3);
     padding: 0;
     border-radius: 8px;
     overflow: hidden;
@@ -1285,9 +1311,31 @@ button[type="submit"]:hover {
 }
 
 /* Menú móvil */
+/* Menú móvil: hamburguesa visible, cruz solo al abrir */
 #openmenu, #closemenu { display: none; }
 @media (max-width: 992px) {
-    #openmenu { display: flex; align-items: center; justify-content: center; color: var(--color-white); font-size: 1.5rem; }
+    #openmenu {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-white);
+        font-size: 1.5rem;
+    }
+    #closemenu {
+        display: none;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        color: var(--color-white);
+        font-size: 1.5rem;
+        z-index: 1002;
+    }
+    #navigation.open #closemenu { display: block; }
+    #navigation.open ~ #openmenu { display: none; }
+    #navigation {
+        position: relative;
+        margin-left: auto;
+    }
     #navigation .menu {
         position: fixed;
         top: 0;
@@ -1303,27 +1351,59 @@ button[type="submit"]:hover {
     }
     #navigation.open .menu { right: 0; }
     #navigation .menu li { float: none; margin: 0 0 16px 0; }
-    #closemenu {
-        display: block;
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        color: var(--color-white);
-        font-size: 1.5rem;
+}
+/* Tablet: planes en 2 columnas o 1 según ancho */
+@media (max-width: 992px) {
+    .plan-card {
+        max-width: calc((100% - 24px) / 2);
+        flex: 1 1 260px;
     }
 }
 @media (max-width: 768px) {
+    .container { padding: 0 16px; }
     .wrapper-aboutus { flex-direction: column; }
     .aboutus-img, .aboutus-content { width: 100%; padding-left: 0; margin-top: 20px; }
-    .hero-edifok h1 { font-size: 1.75rem; }
-    .plans-edifok { flex-direction: column; align-items: center; }
-    .plan-card { width: 100%; max-width: 400px; }
+    .aboutus-img { order: -1; }
+    .hero-edifok .hero-content { padding: 0 16px; }
+    .hero-edifok h1 { font-size: 1.65rem; }
+    .hero-description { font-size: 1rem; padding: 0 10px; }
+    .btn-cta { padding: 12px 22px; font-size: 0.95rem; }
+    .plans-edifok { flex-direction: column; align-items: stretch; gap: 20px; }
+    .plan-card {
+        width: 100%;
+        flex: 1 1 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
     .team-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
     .team-photo { width: 120px; height: 120px; }
     .wrapper-contact-form { flex-direction: column; }
     .wrapper-contact, .wrapper-form { width: 100%; padding-right: 0; margin-bottom: 24px; }
-    .edificio-card { flex: 0 0 260px; }
+    .wrapper-input { flex-direction: column; }
+    .wrapper-input input { width: 100%; }
+    .edificio-card { flex: 0 0 260px; min-width: 240px; }
+    .section-subtitle { font-size: 0.95rem; padding: 0 10px; }
+    #contact h2 { margin-bottom: 24px; }
+    .copyright p { font-size: 13px; text-align: center; padding: 0 10px; }
 }
 @media (max-width: 480px) {
+    .container { padding: 0 12px; }
+    #header { padding-left: 12px; padding-right: 12px; }
+    .logo-edifok { font-size: 1.25rem; }
+    .menu { gap: 6px 16px; }
+    .menu li a { font-size: 0.9rem; }
     .team-grid { grid-template-columns: 1fr; }
+    .team-photo { width: 140px; height: 140px; }
+    .edificio-card { flex: 0 0 85vw; min-width: 85vw; }
+    .whatsapp-float { bottom: 20px; right: 20px; width: 52px; height: 52px; font-size: 26px; }
+    .btn-scroll-top { bottom: 80px; right: 20px; width: 44px; height: 44px; }
+    .wrapper-header-img { padding: 100px 16px 60px; min-height: 500px; }
+}
+/* Hero: fondo fijo y altura en desktop */
+@media (min-width: 769px) {
+    .wrapper-header-img {
+        background-attachment: fixed;
+        min-height: 750px;
+        padding: 140px 20px 100px;
+    }
 }
