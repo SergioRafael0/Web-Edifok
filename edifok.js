@@ -98,5 +98,40 @@
         card.classList.add('animate-in');
       });
     }
+
+    // Animación del contador de años al hacer scroll
+    var counters = document.querySelectorAll('.counter');
+    
+    if (typeof IntersectionObserver !== 'undefined') {
+      var counterObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var counter = entry.target;
+            var targetValue = parseInt(counter.textContent, 10);
+            var duration = 2000; // 2 segundos
+            var startTime = Date.now();
+            var startValue = 0;
+
+            function updateCounter() {
+              var elapsed = Date.now() - startTime;
+              var progress = Math.min(elapsed / duration, 1);
+              var currentValue = Math.floor(startValue + (targetValue - startValue) * progress);
+              counter.textContent = currentValue;
+
+              if (progress < 1) {
+                requestAnimationFrame(updateCounter);
+              }
+            }
+
+            updateCounter();
+            counterObserver.unobserve(counter);
+          }
+        });
+      }, { root: null, rootMargin: '0px 0px -100px 0px', threshold: 0.1 });
+
+      counters.forEach(function(counter) {
+        counterObserver.observe(counter);
+      });
+    }
   });
 })();

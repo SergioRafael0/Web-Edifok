@@ -404,6 +404,11 @@ a {
     display: inline-block;
 }
 
+.counter {
+    font-variant-numeric: tabular-nums;
+}
+
+
 .wrapper-founder {
    -webkit-box-align: center;
        -ms-flex-align: center;
@@ -777,18 +782,18 @@ a {
     margin-right: 10px;
 }
 
-.single-pricing:nth-child(2) {
+.single-pricing.plan-destacado {
     background-color: var(--color-blue);
     padding-top: 70px;
     padding-bottom: 70px;
     color: var(--color-white);
 }
 
-.single-pricing:nth-child(2) h3  {
+.single-pricing.plan-destacado h3  {
     color: var(--color-green);
 }
 
-.single-pricing:nth-child(2) .price {
+.single-pricing.plan-destacado .price {
     color: var(--color-white);
 }
 
@@ -1016,7 +1021,7 @@ button[type="submit"]:hover {
 .header-edifok.scrolled {
     background: rgba(16, 19, 28, 0.95);
     padding-top: 12px;
-    padding-bottom: 12px;
+    padding-bottom: 12px;f
 }
 .logo-edifok {
     font-size: 1.5rem;
@@ -1027,6 +1032,15 @@ button[type="submit"]:hover {
 .logo-edifok:hover {
     color: var(--color-white);
     opacity: 0.9;
+}
+
+.logo-edifok .logo-highlight {
+    color: var(--color-green);
+}
+
+/* Keep the green on hover so the 'ok' stays highlighted */
+.logo-edifok:hover .logo-highlight {
+    color: var(--color-green);
 }
 
 /* Hero Edifok */
@@ -1043,6 +1057,7 @@ button[type="submit"]:hover {
     color: var(--color-green);
 }
 .hero-description {
+    color:#f8f8f8;
     font-size: 1.1rem;
     line-height: 1.6;
     margin-bottom: 2rem;
