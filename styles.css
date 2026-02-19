@@ -1440,3 +1440,8 @@ button[type="submit"]:hover {
         padding: 140px 20px 100px;
     }
 }
+
+.segun-texto{
+    padding-left: 20px;
+    padding-right: 20px;
+}
