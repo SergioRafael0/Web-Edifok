@@ -1167,9 +1167,9 @@ button[type="submit"]:hover {
     font-weight: 700;
     text-align: center;
 }
-.plan-basico { background: var(--color-blue); }
-.plan-premium { background: #3d5a9e; }
-.plan-full { background: var(--color-blue); }
+.plan-basico { background:darkgoldenrod; }
+.plan-premium { background: var(--color-blue); }
+.plan-full { background:#10131c }
 .plan-card .price {
     padding: 20px 20px 10px;
     font-size: 1.75rem;
@@ -1190,23 +1190,41 @@ button[type="submit"]:hover {
     text-align: center;
     margin: 0 20px 24px;
     padding: 12px 20px;
-    background: var(--color-blue);
+    background:#20bd5a;
     color: var(--color-white) !important;
     border-radius: 6px;
     font-weight: 600;
-    transition: background 0.3s ease;
+    transition: background 0.25s ease, transform 0.12s ease;
 }
-.btn-plan:hover {
-    background: #3d5a9e;
+/* By default buttons are green; on hover/focus/active/selected they take the plan color */
+.plan-card > .plan-header.plan-basico ~ .btn-plan:hover,
+.plan-card > .plan-header.plan-basico ~ .btn-plan:focus,
+.plan-card > .plan-header.plan-basico ~ .btn-plan:active,
+.plan-card > .plan-header.plan-basico ~ .btn-plan.selected {
+    background: darkgoldenrod;
 }
-.plan-destacado .btn-plan {
-    background: var(--color-green);
+.plan-card > .plan-header.plan-premium ~ .btn-plan:hover,
+.plan-card > .plan-header.plan-premium ~ .btn-plan:focus,
+.plan-card > .plan-header.plan-premium ~ .btn-plan:active,
+.plan-card > .plan-header.plan-premium ~ .btn-plan.selected {
+    background: var(--color-blue);
 }
-.plan-destacado .btn-plan:hover {
-    background: #4ab85e;
+.plan-card > .plan-header.plan-full ~ .btn-plan:hover,
+.plan-card > .plan-header.plan-full ~ .btn-plan:focus,
+.plan-card > .plan-header.plan-full ~ .btn-plan:active,
+.plan-card > .plan-header.plan-full ~ .btn-plan.selected {
+    background: #10131c;
 }
 
+/* Slight press effect */
+.btn-plan:active { transform: translateY(1px); }
+
 /* Edificios - Carrusel horizontal */
+
+.edificios-h3{
+    color:#fff;
+}
+
 .edificios-carrusel-wrapper {
     overflow: hidden;
     padding-bottom: 20px;
